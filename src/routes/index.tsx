@@ -432,60 +432,119 @@ function Footer() {
   );
 }
 
+type Phase = {
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+};
+
+const PHASES: Phase[] = [
+  {
+    icon: MapPin,
+    title: "Chegada e Recepção",
+    desc: "Ao chegar à Wilson Sons, você será recebido pela equipe responsável e realizará seu credenciamento para acesso às áreas autorizadas.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Orientação de Segurança",
+    desc: "Antes do início da visita, você receberá instruções sobre normas de segurança, circulação nas áreas operacionais e utilização dos equipamentos de proteção.",
+  },
+  {
+    icon: HardHat,
+    title: "Preparação para Acesso",
+    desc: "Nossa equipe verificará as vestimentas adequadas e fornecerá os EPIs necessários para garantir uma visita segura.",
+  },
+  {
+    icon: Ship,
+    title: "Conheça as Operações Portuárias",
+    desc: "Descubra como funcionam as atividades marítimas e portuárias que fazem da Wilson Sons uma referência no setor.",
+  },
+  {
+    icon: Anchor,
+    title: "Exploração das Áreas Operacionais",
+    desc: "Acompanhe de perto estruturas, equipamentos e processos que fazem parte da rotina operacional do estaleiro.",
+  },
+  {
+    icon: Users,
+    title: "Interação com Especialistas",
+    desc: "Tenha a oportunidade de conhecer profissionais da área e compreender os desafios e tecnologias envolvidos nas operações.",
+  },
+  {
+    icon: Camera,
+    title: "Encerramento da Experiência",
+    desc: "Finalize sua visita com uma visão ampla do universo marítimo, levando novos conhecimentos sobre logística, engenharia e operações portuárias.",
+  },
+];
+
 function VisitTimeline() {
-  const phases = [
-    {
-      icon: UserCheck,
-      title: "Credenciamento",
-      time: "08:00 — 08:30",
-      desc: "Chegada à portaria, conferência de documentos e entrega do crachá de visitante com QR Code de rastreabilidade.",
-    },
-    {
-      icon: FileSignature,
-      title: "Briefing de Segurança",
-      time: "08:30 — 09:00",
-      desc: "Assinatura do termo de responsabilidade e apresentação dos protocolos HSE específicos do estaleiro.",
-    },
-    {
-      icon: HelmetIcon,
-      title: "Equipagem com EPIs",
-      time: "09:00 — 09:20",
-      desc: "Distribuição e ajuste dos equipamentos de proteção individual: capacete, botas, óculos e colete refletivo.",
-    },
-    {
-      icon: Map,
-      title: "Tour Guiado",
-      time: "09:20 — 11:30",
-      desc: "Visita às áreas operacionais com guia técnico: dique seco, oficinas de manutenção e linha de atracação.",
-    },
-    {
-      icon: Sparkles,
-      title: "Encerramento",
-      time: "11:30 — 12:00",
-      desc: "Sessão de perguntas, devolução de EPIs e entrega do certificado digital de participação.",
-    },
-  ];
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 80%", "end 20%"],
+  });
+  const lineHeight = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 24,
+    mass: 0.4,
+  });
+  const lineHeightCSS = useTransform(lineHeight, (v) => `${v * 100}%`);
+  const progressPct = useTransform(lineHeight, (v) => `${Math.round(v * 100)}%`);
 
   return (
-    <section className="bg-secondary/40 py-24">
-      <div className="container mx-auto px-4">
+    <section
+      id="cronograma"
+      className="relative overflow-hidden py-28"
+      style={{ background: "var(--gradient-ocean)" }}
+    >
+      {/* decorative background */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.07]" style={{
+        backgroundImage:
+          "radial-gradient(circle at 20% 10%, white 1px, transparent 1px), radial-gradient(circle at 80% 60%, white 1px, transparent 1px)",
+        backgroundSize: "48px 48px, 64px 64px",
+      }} />
+      <div className="pointer-events-none absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-marine/30 blur-3xl" />
+      <div className="pointer-events-none absolute -right-32 bottom-10 h-96 w-96 rounded-full bg-safety/20 blur-3xl" />
+
+      <div className="container relative mx-auto px-4 text-primary-foreground">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-marine">
-            Cronograma
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] backdrop-blur-md">
+            <Anchor className="h-3.5 w-3.5" />
+            Jornada do Visitante
           </span>
-          <h2 className="mt-3 text-4xl font-bold md:text-5xl">
-            Fases da sua visitação
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Acompanhe, passo a passo, como será o seu dia no estaleiro Wilson Sons.
+          <h2 className="mt-5 text-4xl font-bold md:text-5xl">Fases da Sua Visitação</h2>
+          <p className="mt-4 text-lg text-white/75">
+            Uma jornada guiada do desembarque ao encerramento — segurança, descoberta e
+            profissionalismo em cada etapa.
           </p>
         </div>
 
-        <div className="relative mx-auto mt-20 max-w-4xl">
-          <div className="absolute left-6 top-0 h-full w-px bg-gradient-to-b from-marine via-marine/40 to-transparent md:left-1/2 md:-translate-x-1/2" />
-          <ol className="space-y-16">
-            {phases.map((phase, i) => (
-              <TimelineItem key={phase.title} phase={phase} index={i} />
+        {/* Progress indicator (sticky) */}
+        <div className="sticky top-20 z-20 mx-auto mt-12 hidden w-fit md:block">
+          <div className="flex items-center gap-3 rounded-full border border-white/15 bg-background/40 px-4 py-2 backdrop-blur-xl">
+            <div className="relative h-2 w-40 overflow-hidden rounded-full bg-white/15">
+              <motion.div
+                className="absolute inset-y-0 left-0 bg-gradient-to-r from-marine via-safety to-success"
+                style={{ width: lineHeightCSS }}
+              />
+            </div>
+            <motion.span className="min-w-[3ch] text-xs font-semibold tabular-nums text-white">
+              {progressPct}
+            </motion.span>
+          </div>
+        </div>
+
+        <div ref={containerRef} className="relative mx-auto mt-12 max-w-5xl">
+          {/* Timeline vertical line */}
+          <div className="absolute left-6 top-0 h-full w-[2px] -translate-x-1/2 overflow-hidden rounded-full bg-white/10 md:left-1/2">
+            <motion.div
+              className="absolute inset-x-0 top-0 origin-top rounded-full bg-gradient-to-b from-marine via-safety to-success shadow-[0_0_20px_rgba(56,189,248,0.6)]"
+              style={{ height: lineHeightCSS }}
+            />
+          </div>
+
+          <ol className="space-y-20 md:space-y-28">
+            {PHASES.map((phase, i) => (
+              <TimelineItem key={phase.title} phase={phase} index={i} total={PHASES.length} />
             ))}
           </ol>
         </div>
@@ -497,69 +556,95 @@ function VisitTimeline() {
 function TimelineItem({
   phase,
   index,
+  total,
 }: {
-  phase: { icon: typeof UserCheck; title: string; time: string; desc: string };
+  phase: Phase;
   index: number;
+  total: number;
 }) {
   const ref = useRef<HTMLLIElement>(null);
-  const [visible, setVisible] = useState(false);
+  const inView = useInView(ref, { amount: 0.55, margin: "-15% 0px -15% 0px" });
   const isLeft = index % 2 === 0;
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            setVisible(true);
-            obs.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.35, rootMargin: "0px 0px -10% 0px" },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
   const Icon = phase.icon;
 
   return (
-    <li
+    <motion.li
       ref={ref}
-      className={`relative grid gap-6 md:grid-cols-2 md:gap-12 transition-all duration-700 ease-out ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-      }`}
+      initial={{ opacity: 0, y: 60 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="relative grid items-center gap-6 md:grid-cols-2 md:gap-16"
     >
-      <div className="absolute left-6 top-6 z-10 -translate-x-1/2 md:left-1/2">
-        <div
-          className={`flex h-12 w-12 items-center justify-center rounded-full bg-marine text-marine-foreground shadow-[var(--shadow-elegant)] ring-4 ring-background transition-transform duration-700 ${
-            visible ? "scale-100" : "scale-0"
-          }`}
+      {/* Dot / Icon */}
+      <div className="absolute left-6 top-2 z-10 -translate-x-1/2 md:left-1/2">
+        <motion.div
+          animate={
+            inView
+              ? { scale: 1, boxShadow: "0 0 0 8px rgba(255,255,255,0.06), 0 0 40px 4px var(--marine)" }
+              : { scale: 0.6, boxShadow: "0 0 0 0px rgba(255,255,255,0), 0 0 0px 0px var(--marine)" }
+          }
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-marine to-safety ring-4 ring-background/60"
         >
-          <Icon className="h-5 w-5" />
-        </div>
+          <motion.div
+            animate={inView ? { rotate: [0, -8, 8, 0], scale: [1, 1.15, 1] } : { rotate: 0, scale: 1 }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
+            className="text-white"
+          >
+            <Icon className="h-6 w-6" />
+          </motion.div>
+          <span className="absolute -bottom-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-background text-[10px] font-bold text-marine ring-2 ring-marine/40">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </motion.div>
       </div>
+
+      {/* Card */}
       <div
         className={`pl-20 md:pl-0 ${
-          isLeft ? "md:pr-16 md:text-right" : "md:col-start-2 md:pl-16"
+          isLeft ? "md:pr-12 md:text-right" : "md:col-start-2 md:pl-12"
         }`}
       >
-        <Card className="border-border/60 p-6 shadow-[var(--shadow-card)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-elegant)]">
-          <div
-            className={`flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-marine ${
-              isLeft ? "md:justify-end" : ""
+        <motion.div
+          animate={
+            inView
+              ? { opacity: 1, scale: 1, filter: "blur(0px)" }
+              : { opacity: 0.35, scale: 0.97, filter: "blur(2px)" }
+          }
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <Card
+            className={`relative overflow-hidden border-white/10 bg-white/[0.04] p-7 backdrop-blur-xl transition-all ${
+              inView ? "shadow-[0_0_40px_-10px_rgba(56,189,248,0.6)]" : "shadow-none"
             }`}
           >
-            Fase {String(index + 1).padStart(2, "0")} · {phase.time}
-          </div>
-          <h3 className="mt-2 text-2xl font-bold">{phase.title}</h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            {phase.desc}
-          </p>
-        </Card>
+            {/* glow active */}
+            <motion.span
+              className="pointer-events-none absolute inset-0 -z-10"
+              animate={inView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.6 }}
+              style={{
+                background:
+                  "radial-gradient(circle at 30% 0%, color-mix(in oklab, var(--marine) 35%, transparent), transparent 60%)",
+              }}
+            />
+            <div
+              className={`flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-marine ${
+                isLeft ? "md:justify-end" : ""
+              }`}
+            >
+              Fase {String(index + 1).padStart(2, "0")} de {String(total).padStart(2, "0")}
+            </div>
+            <h3 className="mt-2 text-2xl font-bold text-white md:text-[1.65rem]">
+              {phase.title}
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-white/75 md:text-base">
+              {phase.desc}
+            </p>
+          </Card>
+        </motion.div>
       </div>
-    </li>
+    </motion.li>
   );
 }
+
