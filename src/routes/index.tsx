@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   Anchor,
   CalendarCheck,
@@ -14,8 +16,16 @@ import {
   Shirt,
   ArrowRight,
   Ship,
+  UserCheck,
+  FileSignature,
+  HardHat as HelmetIcon,
+  Map,
+  Sparkles,
+  Lock,
 } from "lucide-react";
 import heroImage from "@/assets/shipyard-hero.jpg";
+
+const QUIZ_URL = "https://forms.gle/YYjpe3wq3fhzscAQ9";
 
 export const Route = createFileRoute("/")({
   head: () => ({
