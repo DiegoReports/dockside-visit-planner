@@ -360,7 +360,7 @@ function QuizCTA() {
             size="lg"
             className="h-14 rounded-full bg-safety px-8 text-base font-semibold text-safety-foreground hover:bg-safety/90"
           >
-            <a href="#agendar">
+            <a href={QUIZ_URL} target="_blank" rel="noopener noreferrer">
               Iniciar Quiz
               <ArrowRight className="ml-2 h-5 w-5" />
             </a>
