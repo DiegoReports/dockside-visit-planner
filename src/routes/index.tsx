@@ -384,14 +384,31 @@ function FinalCTA() {
           Realize o quiz de segurança e em seguida solicite sua visita ao estaleiro.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Button size="lg" className="h-14 rounded-full bg-safety px-8 text-base font-semibold text-safety-foreground hover:bg-safety/90">
-            <ShieldCheck className="mr-2 h-5 w-5" />
-            Quiz de Segurança
+          <Button
+            asChild
+            size="lg"
+            className="h-14 rounded-full bg-safety px-8 text-base font-semibold text-safety-foreground hover:bg-safety/90"
+          >
+            <a href={QUIZ_URL} target="_blank" rel="noopener noreferrer">
+              <ShieldCheck className="mr-2 h-5 w-5" />
+              Quiz de Segurança
+            </a>
           </Button>
-          <Button size="lg" variant="outline" className="h-14 rounded-full px-8 text-base font-semibold">
-            <CalendarCheck className="mr-2 h-5 w-5" />
-            Solicitar Visita
-          </Button>
+          <div className="flex flex-col items-center gap-2">
+            <Button
+              size="lg"
+              disabled
+              aria-disabled="true"
+              className="h-14 rounded-full bg-muted px-8 text-base font-semibold text-muted-foreground"
+            >
+              <Lock className="mr-2 h-5 w-5" />
+              Solicitar Visita
+            </Button>
+            <Badge variant="outline" className="gap-1 border-dashed text-muted-foreground">
+              <Lock className="h-3 w-3" />
+              Liberado após aprovação no Quiz de Segurança
+            </Badge>
+          </div>
         </div>
       </div>
     </section>
