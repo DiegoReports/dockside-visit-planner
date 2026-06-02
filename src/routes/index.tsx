@@ -580,8 +580,8 @@ function TimelineItem({
         <motion.div
           animate={
             inView
-              ? { scale: 1, boxShadow: "0 0 0 8px rgba(255,255,255,0.06), 0 0 40px 4px var(--marine)" }
-              : { scale: 0.6, boxShadow: "0 0 0 0px rgba(255,255,255,0), 0 0 0px 0px var(--marine)" }
+              ? { scale: 1, boxShadow: "0 0 0 8px rgba(255,255,255,0.06), 0 0 40px 4px var(--accent-marine)" }
+              : { scale: 0.6, boxShadow: "0 0 0 0px rgba(255,255,255,0), 0 0 0px 0px var(--accent-marine)" }
           }
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-marine to-safety ring-4 ring-background/60"
@@ -625,7 +625,7 @@ function TimelineItem({
               transition={{ duration: 0.6 }}
               style={{
                 background:
-                  "radial-gradient(circle at 30% 0%, color-mix(in oklab, var(--marine) 35%, transparent), transparent 60%)",
+                  "radial-gradient(circle at 30% 0%, color-mix(in oklab, var(--accent-marine) 35%, transparent), transparent 60%)",
               }}
             />
             <div
