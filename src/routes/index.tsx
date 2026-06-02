@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useInView, useSpring } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -16,12 +17,11 @@ import {
   Shirt,
   ArrowRight,
   Ship,
-  UserCheck,
-  FileSignature,
-  HardHat as HelmetIcon,
-  Map,
-  Sparkles,
+  MapPin,
+  Users,
+  Camera,
   Lock,
+  type LucideIcon,
 } from "lucide-react";
 import heroImage from "@/assets/shipyard-hero.jpg";
 
