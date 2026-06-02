@@ -431,3 +431,135 @@ function Footer() {
     </footer>
   );
 }
+
+function VisitTimeline() {
+  const phases = [
+    {
+      icon: UserCheck,
+      title: "Credenciamento",
+      time: "08:00 — 08:30",
+      desc: "Chegada à portaria, conferência de documentos e entrega do crachá de visitante com QR Code de rastreabilidade.",
+    },
+    {
+      icon: FileSignature,
+      title: "Briefing de Segurança",
+      time: "08:30 — 09:00",
+      desc: "Assinatura do termo de responsabilidade e apresentação dos protocolos HSE específicos do estaleiro.",
+    },
+    {
+      icon: HelmetIcon,
+      title: "Equipagem com EPIs",
+      time: "09:00 — 09:20",
+      desc: "Distribuição e ajuste dos equipamentos de proteção individual: capacete, botas, óculos e colete refletivo.",
+    },
+    {
+      icon: Map,
+      title: "Tour Guiado",
+      time: "09:20 — 11:30",
+      desc: "Visita às áreas operacionais com guia técnico: dique seco, oficinas de manutenção e linha de atracação.",
+    },
+    {
+      icon: Sparkles,
+      title: "Encerramento",
+      time: "11:30 — 12:00",
+      desc: "Sessão de perguntas, devolução de EPIs e entrega do certificado digital de participação.",
+    },
+  ];
+
+  return (
+    <section className="bg-secondary/40 py-24">
+      <div className="container mx-auto px-4">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-marine">
+            Cronograma
+          </span>
+          <h2 className="mt-3 text-4xl font-bold md:text-5xl">
+            Fases da sua visitação
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Acompanhe, passo a passo, como será o seu dia no estaleiro Wilson Sons.
+          </p>
+        </div>
+
+        <div className="relative mx-auto mt-20 max-w-4xl">
+          <div className="absolute left-6 top-0 h-full w-px bg-gradient-to-b from-marine via-marine/40 to-transparent md:left-1/2 md:-translate-x-1/2" />
+          <ol className="space-y-16">
+            {phases.map((phase, i) => (
+              <TimelineItem key={phase.title} phase={phase} index={i} />
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function TimelineItem({
+  phase,
+  index,
+}: {
+  phase: { icon: typeof UserCheck; title: string; time: string; desc: string };
+  index: number;
+}) {
+  const ref = useRef<HTMLLIElement>(null);
+  const [visible, setVisible] = useState(false);
+  const isLeft = index % 2 === 0;
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            setVisible(true);
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.35, rootMargin: "0px 0px -10% 0px" },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const Icon = phase.icon;
+
+  return (
+    <li
+      ref={ref}
+      className={`relative grid gap-6 md:grid-cols-2 md:gap-12 transition-all duration-700 ease-out ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
+    >
+      <div className="absolute left-6 top-6 z-10 -translate-x-1/2 md:left-1/2">
+        <div
+          className={`flex h-12 w-12 items-center justify-center rounded-full bg-marine text-marine-foreground shadow-[var(--shadow-elegant)] ring-4 ring-background transition-transform duration-700 ${
+            visible ? "scale-100" : "scale-0"
+          }`}
+        >
+          <Icon className="h-5 w-5" />
+        </div>
+      </div>
+      <div
+        className={`pl-20 md:pl-0 ${
+          isLeft ? "md:pr-16 md:text-right" : "md:col-start-2 md:pl-16"
+        }`}
+      >
+        <Card className="border-border/60 p-6 shadow-[var(--shadow-card)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-elegant)]">
+          <div
+            className={`flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-marine ${
+              isLeft ? "md:justify-end" : ""
+            }`}
+          >
+            Fase {String(index + 1).padStart(2, "0")} · {phase.time}
+          </div>
+          <h3 className="mt-2 text-2xl font-bold">{phase.title}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            {phase.desc}
+          </p>
+        </Card>
+      </div>
+    </li>
+  );
+}
