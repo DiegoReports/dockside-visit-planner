@@ -56,6 +56,7 @@ function Index() {
       <Process />
       <SafetyRules />
       <InstitutionalVideo />
+      <VisitTimeline />
       <QuizCTA />
       <FinalCTA />
       <Footer />
