@@ -79,6 +79,7 @@ function Header() {
           <a href="#processo" className="transition-colors hover:text-foreground">Processo</a>
           <a href="#seguranca" className="transition-colors hover:text-foreground">Segurança</a>
           <a href="#video" className="transition-colors hover:text-foreground">Vídeo</a>
+          <a href="#quiz" className="transition-colors hover:text-foreground">Quiz</a>
         </nav>
         <Button asChild size="sm" className="rounded-full">
           <a href="#agendar">Agendar</a>
@@ -487,17 +488,19 @@ function VisitTimeline() {
   return (
     <section
       id="cronograma"
-      className="relative overflow-hidden py-28"
+      className="relative py-28"
       style={{ background: "var(--gradient-ocean)" }}
     >
-      {/* decorative background */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.07]" style={{
-        backgroundImage:
-          "radial-gradient(circle at 20% 10%, white 1px, transparent 1px), radial-gradient(circle at 80% 60%, white 1px, transparent 1px)",
-        backgroundSize: "48px 48px, 64px 64px",
-      }} />
-      <div className="pointer-events-none absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-marine/30 blur-3xl" />
-      <div className="pointer-events-none absolute -right-32 bottom-10 h-96 w-96 rounded-full bg-safety/20 blur-3xl" />
+      {/* decorative background (clipped here so the section can host position:sticky) */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.07]" style={{
+          backgroundImage:
+            "radial-gradient(circle at 20% 10%, white 1px, transparent 1px), radial-gradient(circle at 80% 60%, white 1px, transparent 1px)",
+          backgroundSize: "48px 48px, 64px 64px",
+        }} />
+        <div className="absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-marine/30 blur-3xl" />
+        <div className="absolute -right-32 bottom-10 h-96 w-96 rounded-full bg-safety/20 blur-3xl" />
+      </div>
 
       <div className="container relative mx-auto px-4 text-primary-foreground">
         <div className="mx-auto max-w-2xl text-center">
