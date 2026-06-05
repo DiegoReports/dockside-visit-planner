@@ -339,33 +339,38 @@ function InstitutionalVideo() {
 
 function QuizCTA() {
   return (
-    <section className="container mx-auto px-4 py-24">
-      <Card className="relative overflow-hidden border-0 p-10 text-primary-foreground shadow-[var(--shadow-elegant)] md:p-14" style={{ background: "var(--gradient-ocean)" }}>
-        <div className="relative z-10 grid items-center gap-8 lg:grid-cols-[1fr_auto]">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider backdrop-blur-md">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              Quiz de Segurança
-            </div>
-            <h2 className="mt-5 text-3xl font-bold md:text-4xl">
-              Antes de agendar, realize o quiz de segurança
-            </h2>
-            <p className="mt-3 max-w-2xl text-white/80">
-              O quiz é obrigatório e garante que todos os visitantes compreendam as normas
-              de segurança do estaleiro. Leva apenas alguns minutos.
-            </p>
+    <section id="quiz" className="container mx-auto px-4 py-24">
+      <Card
+        className="relative overflow-hidden border-0 p-6 text-primary-foreground shadow-[var(--shadow-elegant)] md:p-10"
+        style={{ background: "var(--gradient-ocean)" }}
+      >
+        <div className="relative z-10 mx-auto max-w-3xl text-center">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider backdrop-blur-md">
+            <ShieldCheck className="h-3.5 w-3.5" />
+            Quiz de Segurança
           </div>
-          <Button
-            asChild
-            size="lg"
-            className="h-14 rounded-full bg-safety px-8 text-base font-semibold text-safety-foreground hover:bg-safety/90"
-          >
-            <a href={QUIZ_URL} target="_blank" rel="noopener noreferrer">
-              Iniciar Quiz
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </a>
-          </Button>
+          <h2 className="mt-5 text-3xl font-bold md:text-4xl">
+            Realize o quiz de segurança
+          </h2>
+          <p className="mt-3 text-white/80">
+            Preencha o formulário abaixo. O quiz é obrigatório e garante que todos os
+            visitantes compreendam as normas de segurança do estaleiro.
+          </p>
         </div>
+
+        <div className="relative z-10 mx-auto mt-8 max-w-3xl overflow-hidden rounded-2xl bg-white shadow-[var(--shadow-card)]">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSeYN4QCfEGSAiPfNcmvFHIY85MKBF1p1QEptBMI2Cn9q4SRqQ/viewform?embedded=true"
+            title="Quiz de Segurança Wilson Sons"
+            width="640"
+            height="1156"
+            className="block w-full"
+            style={{ minHeight: "1156px" }}
+          >
+            A carregar…
+          </iframe>
+        </div>
+
         <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-marine/30 blur-3xl" />
       </Card>
     </section>
@@ -381,34 +386,23 @@ function FinalCTA() {
         </div>
         <h2 className="mt-6 text-4xl font-bold md:text-5xl">Pronto para visitar?</h2>
         <p className="mt-4 text-lg text-muted-foreground">
-          Realize o quiz de segurança e em seguida solicite sua visita ao estaleiro.
+          Após concluir e ser aprovado no quiz de segurança, sua solicitação de visita
+          será liberada.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
+        <div className="mt-8 flex flex-col items-center gap-3">
           <Button
-            asChild
             size="lg"
-            className="h-14 rounded-full bg-safety px-8 text-base font-semibold text-safety-foreground hover:bg-safety/90"
+            disabled
+            aria-disabled="true"
+            className="h-14 rounded-full bg-muted px-8 text-base font-semibold text-muted-foreground"
           >
-            <a href={QUIZ_URL} target="_blank" rel="noopener noreferrer">
-              <ShieldCheck className="mr-2 h-5 w-5" />
-              Quiz de Segurança
-            </a>
+            <Lock className="mr-2 h-5 w-5" />
+            Solicitar Visita
           </Button>
-          <div className="flex flex-col items-center gap-2">
-            <Button
-              size="lg"
-              disabled
-              aria-disabled="true"
-              className="h-14 rounded-full bg-muted px-8 text-base font-semibold text-muted-foreground"
-            >
-              <Lock className="mr-2 h-5 w-5" />
-              Solicitar Visita
-            </Button>
-            <Badge variant="outline" className="gap-1 border-dashed text-muted-foreground">
-              <Lock className="h-3 w-3" />
-              Liberado após aprovação no Quiz de Segurança
-            </Badge>
-          </div>
+          <Badge variant="outline" className="gap-1 border-dashed text-muted-foreground">
+            <Lock className="h-3 w-3" />
+            Liberado após aprovação no Quiz de Segurança
+          </Badge>
         </div>
       </div>
     </section>
@@ -518,10 +512,10 @@ function VisitTimeline() {
           </p>
         </div>
 
-        {/* Progress indicator (sticky) */}
-        <div className="sticky top-20 z-20 mx-auto mt-12 hidden w-fit md:block">
-          <div className="flex items-center gap-3 rounded-full border border-white/15 bg-background/40 px-4 py-2 backdrop-blur-xl">
-            <div className="relative h-2 w-40 overflow-hidden rounded-full bg-white/15">
+        {/* Progress indicator (sticky during section scroll) */}
+        <div className="sticky top-4 z-30 mx-auto mt-12 w-fit md:top-20">
+          <div className="flex items-center gap-3 rounded-full border border-white/15 bg-background/60 px-3 py-2 shadow-lg backdrop-blur-xl md:px-4">
+            <div className="relative h-2 w-32 overflow-hidden rounded-full bg-white/15 md:w-40">
               <motion.div
                 className="absolute inset-y-0 left-0 bg-gradient-to-r from-marine via-safety to-success"
                 style={{ width: lineHeightCSS }}
