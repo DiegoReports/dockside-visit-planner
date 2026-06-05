@@ -512,10 +512,10 @@ function VisitTimeline() {
           </p>
         </div>
 
-        {/* Progress indicator (sticky) */}
-        <div className="sticky top-20 z-20 mx-auto mt-12 hidden w-fit md:block">
-          <div className="flex items-center gap-3 rounded-full border border-white/15 bg-background/40 px-4 py-2 backdrop-blur-xl">
-            <div className="relative h-2 w-40 overflow-hidden rounded-full bg-white/15">
+        {/* Progress indicator (sticky during section scroll) */}
+        <div className="sticky top-4 z-30 mx-auto mt-12 w-fit md:top-20">
+          <div className="flex items-center gap-3 rounded-full border border-white/15 bg-background/60 px-3 py-2 shadow-lg backdrop-blur-xl md:px-4">
+            <div className="relative h-2 w-32 overflow-hidden rounded-full bg-white/15 md:w-40">
               <motion.div
                 className="absolute inset-y-0 left-0 bg-gradient-to-r from-marine via-safety to-success"
                 style={{ width: lineHeightCSS }}
