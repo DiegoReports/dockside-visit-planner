@@ -386,34 +386,23 @@ function FinalCTA() {
         </div>
         <h2 className="mt-6 text-4xl font-bold md:text-5xl">Pronto para visitar?</h2>
         <p className="mt-4 text-lg text-muted-foreground">
-          Realize o quiz de segurança e em seguida solicite sua visita ao estaleiro.
+          Após concluir e ser aprovado no quiz de segurança, sua solicitação de visita
+          será liberada.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
+        <div className="mt-8 flex flex-col items-center gap-3">
           <Button
-            asChild
             size="lg"
-            className="h-14 rounded-full bg-safety px-8 text-base font-semibold text-safety-foreground hover:bg-safety/90"
+            disabled
+            aria-disabled="true"
+            className="h-14 rounded-full bg-muted px-8 text-base font-semibold text-muted-foreground"
           >
-            <a href={QUIZ_URL} target="_blank" rel="noopener noreferrer">
-              <ShieldCheck className="mr-2 h-5 w-5" />
-              Quiz de Segurança
-            </a>
+            <Lock className="mr-2 h-5 w-5" />
+            Solicitar Visita
           </Button>
-          <div className="flex flex-col items-center gap-2">
-            <Button
-              size="lg"
-              disabled
-              aria-disabled="true"
-              className="h-14 rounded-full bg-muted px-8 text-base font-semibold text-muted-foreground"
-            >
-              <Lock className="mr-2 h-5 w-5" />
-              Solicitar Visita
-            </Button>
-            <Badge variant="outline" className="gap-1 border-dashed text-muted-foreground">
-              <Lock className="h-3 w-3" />
-              Liberado após aprovação no Quiz de Segurança
-            </Badge>
-          </div>
+          <Badge variant="outline" className="gap-1 border-dashed text-muted-foreground">
+            <Lock className="h-3 w-3" />
+            Liberado após aprovação no Quiz de Segurança
+          </Badge>
         </div>
       </div>
     </section>
