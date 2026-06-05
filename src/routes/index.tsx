@@ -339,33 +339,38 @@ function InstitutionalVideo() {
 
 function QuizCTA() {
   return (
-    <section className="container mx-auto px-4 py-24">
-      <Card className="relative overflow-hidden border-0 p-10 text-primary-foreground shadow-[var(--shadow-elegant)] md:p-14" style={{ background: "var(--gradient-ocean)" }}>
-        <div className="relative z-10 grid items-center gap-8 lg:grid-cols-[1fr_auto]">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider backdrop-blur-md">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              Quiz de Segurança
-            </div>
-            <h2 className="mt-5 text-3xl font-bold md:text-4xl">
-              Antes de agendar, realize o quiz de segurança
-            </h2>
-            <p className="mt-3 max-w-2xl text-white/80">
-              O quiz é obrigatório e garante que todos os visitantes compreendam as normas
-              de segurança do estaleiro. Leva apenas alguns minutos.
-            </p>
+    <section id="quiz" className="container mx-auto px-4 py-24">
+      <Card
+        className="relative overflow-hidden border-0 p-6 text-primary-foreground shadow-[var(--shadow-elegant)] md:p-10"
+        style={{ background: "var(--gradient-ocean)" }}
+      >
+        <div className="relative z-10 mx-auto max-w-3xl text-center">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider backdrop-blur-md">
+            <ShieldCheck className="h-3.5 w-3.5" />
+            Quiz de Segurança
           </div>
-          <Button
-            asChild
-            size="lg"
-            className="h-14 rounded-full bg-safety px-8 text-base font-semibold text-safety-foreground hover:bg-safety/90"
-          >
-            <a href={QUIZ_URL} target="_blank" rel="noopener noreferrer">
-              Iniciar Quiz
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </a>
-          </Button>
+          <h2 className="mt-5 text-3xl font-bold md:text-4xl">
+            Realize o quiz de segurança
+          </h2>
+          <p className="mt-3 text-white/80">
+            Preencha o formulário abaixo. O quiz é obrigatório e garante que todos os
+            visitantes compreendam as normas de segurança do estaleiro.
+          </p>
         </div>
+
+        <div className="relative z-10 mx-auto mt-8 max-w-3xl overflow-hidden rounded-2xl bg-white shadow-[var(--shadow-card)]">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSeYN4QCfEGSAiPfNcmvFHIY85MKBF1p1QEptBMI2Cn9q4SRqQ/viewform?embedded=true"
+            title="Quiz de Segurança Wilson Sons"
+            width="640"
+            height="1156"
+            className="block w-full"
+            style={{ minHeight: "1156px" }}
+          >
+            A carregar…
+          </iframe>
+        </div>
+
         <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-marine/30 blur-3xl" />
       </Card>
     </section>
