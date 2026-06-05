@@ -79,6 +79,7 @@ function Header() {
           <a href="#processo" className="transition-colors hover:text-foreground">Processo</a>
           <a href="#seguranca" className="transition-colors hover:text-foreground">Segurança</a>
           <a href="#video" className="transition-colors hover:text-foreground">Vídeo</a>
+          <a href="#quiz" className="transition-colors hover:text-foreground">Quiz</a>
         </nav>
         <Button asChild size="sm" className="rounded-full">
           <a href="#agendar">Agendar</a>
